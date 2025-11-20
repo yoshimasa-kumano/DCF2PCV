@@ -1,0 +1,118 @@
+DCF_MGI13.dat Generation - Power Query M Script Usage Instructions
+====================================================================
+
+OVERVIEW
+--------
+This Power Query M script reads TBL_SNRYKMK.txt and generates DCF_MGI13.dat in CSV format.
+
+OUTPUT FILE SPECIFICATIONS
+--------------------------
+- Filename: DCF_MGI13.dat
+- Format: CSV
+- Encoding: UTF-8 (without BOM)
+- All fields: Enclosed in double quotes ""
+
+EXCEL POWER QUERY USAGE STEPS
+------------------------------
+
+1. Open Excel
+
+2. Go to "Data" tab -> "Get Data" -> "Blank Query"
+
+3. When Power Query Editor opens, click "Advanced Editor"
+
+4. Copy and paste the contents of DCF_MGI13_PowerQuery.m
+
+5. IMPORTANT: Change the file path in line 4 to your actual file location:
+   
+   Current:
+   Source = Csv.Document(File.Contents("C:\Users\Yoshimasa Kumano\OneDrive - パースペクティブ株式会社\ドキュメント\GitHub\DCF2PCV\DCF_202510_中締\TBL_SNRYKMK.txt"),...
+   
+   Change to your actual path
+
+6. Click "Done"
+
+7. Verify the data loads correctly
+
+8. Go to "Home" tab -> "Close & Load" -> "Close & Load To..."
+
+9. Select "Only Create Connection" and click "OK"
+
+10. Right-click the query in the Queries pane -> "Export" or use File -> Export
+
+11. Save to: C:\Users\Yoshimasa Kumano\OneDrive - パースペクティブ株式会社\ドキュメント\GitHub\DCF2PCV\output
+
+12. Filename: DCF_MGI13.dat
+
+13. Format: Select "CSV (UTF-8)"
+
+IMPORTANT NOTE ABOUT QUOTED FIELDS
+-----------------------------------
+Power Query's default CSV export may not quote all fields. If you require all fields 
+to be quoted (as specified), you may need to:
+
+Option 1: Use a text editor after export
+- Open DCF_MGI13.dat in a text editor
+- Verify all fields are quoted
+- If not, you may need additional processing
+
+Option 2: Use Python script (provided separately if needed)
+- A Python script can ensure all fields are properly quoted
+
+Please let me know if you need help with ensuring all fields are quoted.
+
+DATA MAPPING
+------------
+
+Input File (TBL_SNRYKMK.txt):
+- Column 1: Fixed value "001"
+- Column 2: Code (e.g., "A01", "A02")
+- Column 3-5: Empty
+- Column 6: Short name (e.g., "内", "腫")
+- Column 7: Full name (e.g., "一般内科", "腫瘍科")
+- Column 8: Katakana name
+
+Output File (DCF_MGI13.dat):
+- DIDAT: Creation date/time (YYYYMMDDHHMMSS format)
+- MIUID: "ACU_SYS" (fixed)
+- DUDAT: NULL
+- MUUID: NULL
+- BDVER: NULL
+- DMSTO: NULL
+- MMSQU: NULL
+- DDPPY: NULL
+- FJPUB: "0" (fixed)
+- DDDPY: NULL
+- FJDEL: "0" (fixed)
+- LUPDT: NULL
+- ASEQN: NULL
+- MGI13MSZKC: "02" (file key)
+- MGI13MSZKK: NULL
+- MGI13KSZKK: Input column 6 (short name)
+- MGI13JSZKK: Input column 7 (full name)
+- MGI13ESZKK: NULL
+
+NOTES
+-----
+1. Always change the file path to your actual location
+2. Input file (TBL_SNRYKMK.txt) must be UTF-8 encoded
+3. Date/time (DIDAT) is automatically set to current time when script runs
+4. NULL values are output as the string "NULL"
+
+TROUBLESHOOTING
+---------------
+Issue: File not found error
+-> Verify the file path in the script is correct
+
+Issue: Character encoding problems
+-> Verify input file is UTF-8 encoded
+-> Verify output is saved as "CSV (UTF-8)"
+
+Issue: Double quotes not applied to all fields
+-> See "IMPORTANT NOTE ABOUT QUOTED FIELDS" section above
+
+SAMPLE OUTPUT
+-------------
+"DIDAT","MIUID","DUDAT","MUUID","BDVER","DMSTO","MMSQU","DDPPY","FJPUB","DDDPY","FJDEL","LUPDT","ASEQN","MGI13MSZKC","MGI13MSZKK","MGI13KSZKK","MGI13JSZKK","MGI13ESZKK"
+"20251120071031","ACU_SYS","NULL","NULL","NULL","NULL","NULL","NULL","0","NULL","0","NULL","NULL","02","NULL","内","一般内科","NULL"
+"20251120071031","ACU_SYS","NULL","NULL","NULL","NULL","NULL","NULL","0","NULL","0","NULL","NULL","02","NULL","腫","腫瘍科","NULL"
